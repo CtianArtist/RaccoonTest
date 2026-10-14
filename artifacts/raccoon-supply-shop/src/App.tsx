@@ -23,7 +23,7 @@ function openSupport() {
     window.alert('Support chat is not available right now. Please check your connection and try again.');
     return;
   }
-  window.zE('webWidget', 'open');
+  window.zE('messenger', 'open');
 }
 
 const products: Product[] = [

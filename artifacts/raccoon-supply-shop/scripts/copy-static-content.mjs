@@ -16,7 +16,7 @@ if (articles.length !== 9 || articles.some((a) => a.body.includes('{'))) {
   throw new Error('Static help article generation requires all nine HTML-only article records.');
 }
 
-const widget = '<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=d8a81616-7241-4162-8bc7-208e0a0fe3c6"></script>';
+const widget = '<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=72c8073a-1923-4b24-9664-a589b2222474"></script>';
 const page = (title, description, body) => `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(title)} — Raccoon Supply Co.</title><meta name="description" content="${escape(description)}">
