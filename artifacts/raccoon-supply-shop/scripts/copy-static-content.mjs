@@ -1,6 +1,7 @@
 import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildCommunity } from './community-pages.mjs';
 
 const artifactDir = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputDir = resolve(artifactDir, 'dist/public');
@@ -44,3 +45,4 @@ const privacy = `<h1>Privacy information</h1><p>How information is handled when 
 await writeFile(resolve(outputDir, 'privacy.html'), page('Privacy information', 'Privacy information for Raccoon Supply Co.', privacy));
 await copyFile(resolve(outputDir, 'index.html'), resolve(outputDir, '404.html'));
 await writeFile(resolve(outputDir, '.nojekyll'), '');
+await buildCommunity(outputDir, base, process.env.PUBLIC_ORIGIN || 'https://ctianartist.github.io');

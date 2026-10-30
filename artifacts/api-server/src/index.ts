@@ -1,5 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { initializeSchema, pool } from "./support/schema.mjs";
 
 const rawPort = process.env["PORT"];
 
@@ -15,7 +16,8 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-app.listen(port, (err) => {
+await initializeSchema();
+const server = app.listen(port, (err) => {
   if (err) {
     logger.error({ err }, "Error listening on port");
     process.exit(1);
@@ -23,3 +25,4 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
 });
+process.on("SIGTERM", () => server.close(() => { void pool.end().then(() => process.exit(0)); }));

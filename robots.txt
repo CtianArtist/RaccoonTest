@@ -1,2 +1,9 @@
 User-agent: *
-Allow: /
+Allow: /RaccoonTest/community/
+Disallow: /RaccoonTest/api/
+Disallow: /RaccoonTest/account/
+Disallow: /RaccoonTest/support/
+Disallow: /RaccoonTest/staff/
+Disallow: /RaccoonTest/admin/
+Disallow: /RaccoonTest/auth/
+Sitemap: https://ctianartist.github.io/RaccoonTest/sitemap.xml

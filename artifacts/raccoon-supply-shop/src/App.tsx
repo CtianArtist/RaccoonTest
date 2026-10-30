@@ -12,7 +12,9 @@ const queryClient = new QueryClient();
 type Product = { slug: string; name: string; price: string; eyebrow: string; description: string; image: string; color: string };
 type Article = { slug: string; title: string; category: string; read: string; intro: string; body: ReactNode };
 const publicAsset = (filename: string) => `${import.meta.env.BASE_URL}${filename}`;
-const pagesLocationHook = import.meta.env.BASE_URL === '/' ? undefined : useHashLocation;
+// Keep storefront URLs identical on Pages and on the full Node host. Server-
+// rendered community/account routes use ordinary links outside this router.
+const pagesLocationHook = useHashLocation;
 
 declare global {
   interface Window { zE?: (...args: string[]) => void }
@@ -77,15 +79,17 @@ function Header() {
   const count = items.reduce((total, item) => total + item.quantity, 0);
   return <header className="sticky top-0 z-40 border-b border-[hsl(var(--border))] bg-[hsl(var(--background)/.94)] backdrop-blur-md">
     <div className="shell flex min-h-[76px] items-center justify-between gap-5"><Logo />
-      <nav className={`${open ? 'absolute left-0 right-0 top-[76px] flex' : 'hidden'} flex-col gap-4 border-b border-[hsl(var(--border))] bg-[hsl(var(--background))] p-5 md:static md:flex md:flex-row md:items-center md:border-0 md:bg-transparent md:p-0`} aria-label="Primary navigation">
+      <nav className={`${open ? 'absolute left-0 right-0 top-[76px] flex' : 'hidden'} flex-col gap-4 border-b border-[hsl(var(--border))] bg-[hsl(var(--background))] p-5 lg:static lg:flex lg:flex-row lg:items-center lg:border-0 lg:bg-transparent lg:p-0`} aria-label="Primary navigation">
         <Link href="/shop" onClick={() => setOpen(false)} className="focus-ring text-sm font-semibold" data-testid="link-shop">Shop</Link>
         <Link href="/help" onClick={() => setOpen(false)} className="focus-ring text-sm font-semibold" data-testid="link-help">Help center</Link>
+        <a href={`${import.meta.env.BASE_URL}community/`} className="focus-ring text-sm font-semibold" data-testid="link-community">Community</a>
+        <a href={`${import.meta.env.BASE_URL}account/`} className="focus-ring text-sm font-semibold" data-testid="link-account">Account</a>
         <Link href="/contact" onClick={() => setOpen(false)} className="focus-ring text-sm font-semibold" data-testid="link-contact">Contact</Link>
       </nav>
       <div className="flex items-center gap-2">
-        <button className="focus-ring hidden items-center gap-2 rounded-full border border-[hsl(var(--border))] px-4 py-2 text-sm font-semibold md:flex" onClick={openSupport} data-testid="button-open-chat"><Headphones size={16} /> Contact support</button>
+        <button className="focus-ring hidden items-center gap-2 rounded-full border border-[hsl(var(--border))] px-4 py-2 text-sm font-semibold lg:flex" onClick={openSupport} data-testid="button-open-chat"><Headphones size={16} /> Contact support</button>
         <Link href="/bag" aria-label={`Shopping bag, ${count} items`} className="focus-ring relative grid h-10 w-10 place-items-center rounded-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]" data-testid="link-bag"><ShoppingBag size={17} />{count > 0 && <span className="absolute -right-1 -top-1 rounded-full bg-[hsl(var(--secondary))] px-1.5 text-xs text-[hsl(var(--foreground))]">{count}</span>}</Link>
-        <button className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-[hsl(var(--border))] md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} data-testid="button-toggle-menu">{open ? <X size={18} /> : <Menu size={18} />}</button>
+        <button className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-[hsl(var(--border))] lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open} data-testid="button-toggle-menu">{open ? <X size={18} /> : <Menu size={18} />}</button>
       </div>
     </div>
   </header>;
