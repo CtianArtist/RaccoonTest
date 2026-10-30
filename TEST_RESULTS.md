@@ -35,7 +35,25 @@ storefront product data, images, shopping bag, official help and the exact
 supplied Zendesk snippet. New community HTML includes the actual questions and
 replies; it is not a JavaScript-only knowledge source.
 
-Live-release verification and public URL checks are recorded after deployment.
+Live GitHub Pages release verified on October 30, 2026, after deployment of
+commit `cd45bcf3305a37bdf9ff95ed608b84864b4b06f5`:
+
+- **88 public HTML pages** returned HTTP 200, covering existing pages, all new
+  archive pages, read-only placeholders and the duplicate `docs/` build.
+- Every checked page contains exactly one unchanged supplied widget snippet.
+  Neither superseded widget key remains in those HTML pages.
+- All **15 primary discussion pages** and their copies contain the actual
+  question and reply text in their initial HTML, with customer provenance.
+- All **seven categories** have public HTML pages.
+- All **38 sitemap URLs** returned HTTP 200. Private/account/API routes,
+  duplicate builds and legacy reference experiments are excluded.
+- Live Chromium checks passed for **all 21 existing storefront routes**, images,
+  shopping bag add/refresh persistence, public discussions, static search,
+  widget initialization and honest read-only account fallback.
+- Responsive layouts passed at 390, 768, 1024 and 1440 pixels with no
+  horizontal overflow; no JavaScript runtime errors or missing core assets
+  were observed in the live browser test.
+
 No claim is made here that Zendesk has indexed the new pages or executed an
 action, or that Copilot has consumed the local ticket data.
 
@@ -54,5 +72,7 @@ action, or that Copilot has consumed the local ticket data.
 9. For the archive build use `pnpm run build:pages`, serve it under
    `/RaccoonTest/`, set `BROWSER_BASE_URL` accordingly without
    `BROWSER_FULL_SERVER=1`, and run `pnpm test:browser`.
+10. Run `node tests/archive.check.mjs https://ctianartist.github.io/RaccoonTest/`
+    to repeat the live HTML, crawler and widget-installation checks.
 
 Do not run the resettable integration suite against production data.
