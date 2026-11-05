@@ -1,9 +1,16 @@
 # Raccoon Supply Co.
 
-Existing storefront and real Zendesk widget, extended with a public customer
-community and a separately deployable, authenticated customer-service backend.
+Extend the existing Raccoon Supply Co. retailer and customer-support simulation.
 
 ## Run & Operate
+
+- This is a fictional e-commerce environment for authorized Zendesk AI security research.
+- The retail API business service is Python FastAPI, reached only through the managed Node/Clerk gateway. It is not a separate public artifact.
+- This site is a fictional research storefront. Checkout creates local PostgreSQL orders; there is no payment provider, payment credential, card collection, charge, or real shipment.
+- Apply the additive `scripts/sql/simulated-checkout.sql` migration after the base retail schema.
+- `docs/order-status-api.md` documents the customer-owned order API and future Zendesk custom action authentication.
+- Keep existing payment secrets exclusively in Replit Secrets and never expose them in frontend JavaScript, API responses, logs or Git history. Do not pass them to Python or use connector/file credential fallbacks. If payments are explicitly requested later, they must remain test-only; live payments are never allowed.
+- The managed API workflow starts both processes. Do not start a duplicate FastAPI server or expose its loopback port.
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
 - `pnpm run typecheck` — full typecheck across all packages
@@ -11,11 +18,6 @@ community and a separately deployable, authenticated customer-service backend.
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - Required env: `DATABASE_URL` — Postgres connection string
-- `pnpm build:pages` — publish read-only HTML archive to root and `docs/`
-- `pnpm build:server` / `pnpm start:server` — build/run the full Node app
-- `pnpm seed:support` — administrator-only CLI; requires five password secrets
-- `pnpm test:support` — disposable real PostgreSQL integration tests
-- See `IMPLEMENTATION.md` for hosting, security boundaries and remaining setup.
 
 ## Stack
 
@@ -24,40 +26,30 @@ community and a separately deployable, authenticated customer-service backend.
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (ESM bundle)
+- Build: esbuild (CJS bundle)
 
 ## Where things live
 
-- Storefront: `artifacts/raccoon-supply-shop/src/App.tsx`
-- Customer-service schema/auth/API/SSR/seed: `artifacts/api-server/src/support/`
-- Static community generator: `artifacts/raccoon-supply-shop/scripts/community-pages.mjs`
-- Zendesk setup: three root `ZENDESK_*_SETUP.md` documents
-- Tests: `tests/support.integration.mjs`, `tests/browser.smoke.mjs`
+_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
 
 ## Architecture decisions
 
-- GitHub Pages publishes main `/` and cannot run a private backend.
-- Its community archive is explicitly read-only; no pretend auth or account switch.
-- The Node app uses the existing PostgreSQL pool with namespaced `rsc_*` tables.
-- Forum content is escaped, moderated customer content, not official policy.
-- Private tickets/orders use backend ownership checks; AI text is not authorization.
-- The supplied Zendesk snippet is unchanged and loaded once in each page template.
+_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
 
 ## Product
 
-Preserve existing products, bag, imagery, branding and official help. Add seven
-forum categories and 15 seeded discussions. The full server adds customer
-accounts, moderated posting, private tickets, scoped actions and diagnostics.
+_Describe the high-level user-facing capabilities of this app once they exist._
+
+## User preferences
+
+- Extend the existing `CtianArtist/RaccoonTest` repository directly; do not fork it or replace it with a separate storefront.
+- Preserve the existing community, help pages, branding, and exact supplied Zendesk widget. Load the widget once per page.
+- Preserve the simulated checkout, authenticated customer ownership, and idempotent order behavior. Do not add payment-processing integrations to this app.
+- The latest approved brief is preserved under `.local/conversation-workspace/files/attached_assets/Pasted-Build-a-complete-modern-fictional-e-commerce-website-ca_1793737361119.txt`.
 
 ## Gotchas
 
-- Never put seed passwords, session tokens or service credentials in source/logs.
-- Seed reset requires explicit opt-in and is disabled in production.
-- A full server build uses `BASE_PATH=/`; a Pages build uses `/RaccoonTest/`.
-  Do not replace server assets with a Pages build before running the Node app.
-- Use the same hash storefront URLs on both hosts; forum pages are SSR/static HTML.
-- Local tickets are not Zendesk tickets. Crawler/action/Copilot setup is manual.
-- Preserve existing root-only reference content, but exclude it from crawler URLs.
+_Populate as you build — sharp edges, "always run X before Y" rules._
 
 ## Pointers
 

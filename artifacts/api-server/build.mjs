@@ -15,7 +15,7 @@ async function buildAll() {
   await rm(distDir, { recursive: true, force: true });
 
   await esbuild({
-    entryPoints: { index: path.resolve(artifactDir, "src/index.ts"), "seed-cli": path.resolve(artifactDir, "src/support/seed-cli.mjs") },
+    entryPoints: [path.resolve(artifactDir, "src/index.ts")],
     platform: "node",
     bundle: true,
     format: "esm",
@@ -28,6 +28,8 @@ async function buildAll() {
     // - uses native modules and loads them dynamically (e.g. sharp)
     // - use path traversal to read files (e.g. @google-cloud/secret-manager loads sibling .proto files)
     external: [
+      "@clerk/express",
+      "@clerk/shared",
       "*.node",
       "sharp",
       "better-sqlite3",

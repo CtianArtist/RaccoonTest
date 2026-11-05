@@ -336,6 +336,18 @@ export async function customFetch<T = unknown>(
   }
 
   const headers = mergeHeaders(isRequest(input) ? input.headers : undefined, headersInit);
+  // Cookie-based Clerk sessions: never expose a bearer token to application code.
+  // Fetch a short-lived, session-bound synchronizer token before each unsafe request.
+  if (typeof window !== "undefined" && !["GET", "HEAD", "OPTIONS"].includes(method)) {
+    const csrfResponse = await fetch("/api/auth/csrf", { credentials: "same-origin" });
+    if (!csrfResponse.ok) {
+      throw new ApiError(csrfResponse, await parseErrorBody(csrfResponse, "GET"), {
+        method: "GET", url: "/api/auth/csrf",
+      });
+    }
+    const { csrfToken } = await csrfResponse.json();
+    headers.set("X-CSRF-Token", csrfToken);
+  }
 
   if (
     typeof init.body === "string" &&

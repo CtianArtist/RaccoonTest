@@ -3,3 +3,10 @@
 
 # No need to store the pnpm store twice.
 .local
+.conversation
+**/.env
+**/.env.*
+!**/.env.example
+/generated-artifacts/
+__pycache__
+.pytest_cache

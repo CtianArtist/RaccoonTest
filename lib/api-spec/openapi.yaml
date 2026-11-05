@@ -1,36 +1,444 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
-  version: 0.1.0
-  description: API specification
+  version: 1.0.0
+  description: Raccoon Supply Co. sandbox retail and customer service API
 servers:
   - url: /api
-    description: Base API path
-tags:
-  - name: health
-    description: Health operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
-      tags: [health]
-      summary: Health check
-      description: Returns server health status
       responses:
-        "200":
-          description: Healthy
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HealthStatus"
+        "200": {description: Healthy, content: {application/json: {schema: {$ref: "#/components/schemas/HealthStatus"}}}}
+  /products:
+    get:
+      operationId: listProducts
+      parameters:
+        - {name: category, in: query, schema: {type: string}}
+        - {name: q, in: query, schema: {type: string}}
+      responses:
+        "200": {description: Catalog, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Product"}}}}}
+  /products/{slug}:
+    get:
+      operationId: getProduct
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Product, content: {application/json: {schema: {$ref: "#/components/schemas/Product"}}}}
+  /me:
+    get:
+      operationId: getMe
+      responses:
+        "200": {description: Current customer, content: {application/json: {schema: {$ref: "#/components/schemas/Customer"}}}}
+        "401": {description: Sign in required}
+  /dashboard:
+    get:
+      operationId: getDashboard
+      responses:
+        "200": {description: Own account overview, content: {application/json: {schema: {$ref: "#/components/schemas/Dashboard"}}}}
+  /orders:
+    get:
+      operationId: listOrders
+      responses:
+        "200": {description: Own orders, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Order"}}}}}
+  /orders/{orderId}:
+    get:
+      operationId: getOrder
+      parameters:
+        - {name: orderId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Own order, content: {application/json: {schema: {$ref: "#/components/schemas/Order"}}}}
+        "404": {description: Not found or not authorized}
+  /checkout:
+    post:
+      operationId: createCheckout
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/CheckoutInput"}}}}
+      responses:
+        "200": {description: Fictional order created atomically without payment processing, content: {application/json: {schema: {$ref: "#/components/schemas/CheckoutLink"}}}}
+  /checkout/sessions/{sessionId}:
+    get:
+      operationId: getCheckoutStatus
+      parameters:
+        - {name: sessionId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Authenticated owner's simulated checkout, content: {application/json: {schema: {$ref: "#/components/schemas/CheckoutStatus"}}}}
+  /orders/{orderId}/status:
+    get:
+      operationId: getOrderStatus
+      summary: Customer-owned order, shipping and return status
+      parameters:
+        - {name: orderId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Status for authenticated owner only, content: {application/json: {schema: {$ref: "#/components/schemas/OrderStatus"}}}}
+        "401": {description: Authentication required}
+        "404": {description: Unknown order or different customer owner}
+  /returns:
+    get:
+      operationId: listReturns
+      responses:
+        "200": {description: Own requests, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/ReturnRequest"}}}}}
+    post:
+      operationId: createReturn
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/ReturnInput"}}}}
+      responses:
+        "201": {description: Request recorded for review, content: {application/json: {schema: {$ref: "#/components/schemas/ReturnRequest"}}}}
+  /support/tickets:
+    get:
+      operationId: listTickets
+      responses:
+        "200": {description: Own support requests, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Ticket"}}}}}
+    post:
+      operationId: createTicket
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/TicketInput"}}}}
+      responses:
+        "201": {description: Private request, content: {application/json: {schema: {$ref: "#/components/schemas/Ticket"}}}}
+  /support/tickets/{ticketId}:
+    get:
+      operationId: getTicket
+      parameters:
+        - {name: ticketId, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Authorized ticket and replies, content: {application/json: {schema: {$ref: "#/components/schemas/Ticket"}}}}
+  /support/tickets/{ticketId}/replies:
+    post:
+      operationId: replyToTicket
+      parameters:
+        - {name: ticketId, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/MessageInput"}}}}
+      responses:
+        "201": {description: Reply recorded, content: {application/json: {schema: {$ref: "#/components/schemas/Ticket"}}}}
+  /community/categories:
+    get:
+      operationId: listCategories
+      responses:
+        "200": {description: Forum categories, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Category"}}}}}
+  /community/discussions:
+    get:
+      operationId: listDiscussions
+      parameters:
+        - {name: q, in: query, schema: {type: string}}
+        - {name: category, in: query, schema: {type: string}}
+        - {name: page, in: query, schema: {type: integer, default: 1}}
+      responses:
+        "200": {description: Published discussions, content: {application/json: {schema: {$ref: "#/components/schemas/DiscussionPage"}}}}
+    post:
+      operationId: createDiscussion
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/DiscussionInput"}}}}
+      responses:
+        "201": {description: Pending moderation, content: {application/json: {schema: {$ref: "#/components/schemas/Discussion"}}}}
+  /community/discussions/{slug}:
+    get:
+      operationId: getDiscussion
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      responses:
+        "200": {description: Public or own pending discussion, content: {application/json: {schema: {$ref: "#/components/schemas/Discussion"}}}}
+    patch:
+      operationId: editDiscussion
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/MessageInput"}}}}
+      responses:
+        "200": {description: Own edited discussion pending moderation, content: {application/json: {schema: {$ref: "#/components/schemas/Discussion"}}}}
+  /community/discussions/{slug}/replies:
+    post:
+      operationId: replyToDiscussion
+      parameters:
+        - {name: slug, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/MessageInput"}}}}
+      responses:
+        "201": {description: Own reply pending moderation, content: {application/json: {schema: {$ref: "#/components/schemas/Discussion"}}}}
+  /community/history:
+    get:
+      operationId: getCommunityHistory
+      responses:
+        "200": {description: Own posting history, content: {application/json: {schema: {type: array, items: {$ref: "#/components/schemas/Discussion"}}}}}
+  /admin/overview:
+    get:
+      operationId: getAdminOverview
+      responses:
+        "200": {description: Authorized moderation and support desk, content: {application/json: {schema: {$ref: "#/components/schemas/AdminOverview"}}}}
+  /admin/moderate:
+    post:
+      operationId: moderateCommunity
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/ModerationInput"}}}}
+      responses:
+        "200": {description: Moderation applied, content: {application/json: {schema: {$ref: "#/components/schemas/ActionResult"}}}}
+  /admin/tickets/{ticketId}/status:
+    patch:
+      operationId: updateTicketStatus
+      parameters:
+        - {name: ticketId, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/TicketStatusInput"}}}}
+      responses:
+        "200": {description: Ticket updated, content: {application/json: {schema: {$ref: "#/components/schemas/Ticket"}}}}
+  /admin/returns/{returnId}/status:
+    patch:
+      operationId: updateReturnStatus
+      parameters:
+        - {name: returnId, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/ReturnStatusInput"}}}}
+      responses:
+        "200": {description: Request reviewed, content: {application/json: {schema: {$ref: "#/components/schemas/ReturnRequest"}}}}
+  /admin/orders/{orderId}/shipping:
+    post:
+      operationId: updateOrderShipping
+      parameters:
+        - {name: orderId, in: path, required: true, schema: {type: string}}
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/ShippingInput"}}}}
+      responses:
+        "200": {description: Sandbox shipping event, content: {application/json: {schema: {$ref: "#/components/schemas/Order"}}}}
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
-        status:
-          type: string
-      required:
-        - status
-
+        status: {type: string}
+    Product:
+      type: object
+      required: [id, slug, name, description, priceCents, image, category, featured, sizes, badge]
+      properties:
+        id: {type: string}
+        slug: {type: string}
+        name: {type: string}
+        description: {type: string}
+        priceCents: {type: integer}
+        image: {type: string}
+        category: {type: string}
+        featured: {type: boolean}
+        sizes: {type: array, items: {type: string}}
+        badge: {type: [string, "null"]}
+    Customer:
+      type: object
+      required: [id, displayName, email, role]
+      properties:
+        id: {type: string}
+        displayName: {type: string}
+        email: {type: string}
+        role: {type: string, enum: [customer, staff, admin]}
+    LineItem:
+      type: object
+      required: [slug, name, quantity, priceCents, size, image]
+      properties:
+        slug: {type: string}
+        name: {type: string}
+        quantity: {type: integer}
+        priceCents: {type: integer}
+        size: {type: string}
+        image: {type: string}
+    ShippingEvent:
+      type: object
+      required: [status, description, createdAt]
+      properties:
+        status: {type: string}
+        description: {type: string}
+        createdAt: {type: string}
+    Order:
+      type: object
+      required: [id, number, status, totalCents, subtotalCents, shippingCents, createdAt, deliveredAt, trackingNumber, carrier, items, events, returnEligible, synthetic]
+      properties:
+        id: {type: string}
+        number: {type: string}
+        status: {type: string}
+        customerId: {type: string}
+        shippingStatus: {type: string}
+        returnStatus: {type: string}
+        totalCents: {type: integer}
+        subtotalCents: {type: integer}
+        shippingCents: {type: integer}
+        createdAt: {type: string}
+        deliveredAt: {type: [string, "null"]}
+        trackingNumber: {type: [string, "null"]}
+        carrier: {type: [string, "null"]}
+        returnEligible: {type: boolean}
+        synthetic: {type: boolean}
+        items: {type: array, items: {$ref: "#/components/schemas/LineItem"}}
+        events: {type: array, items: {$ref: "#/components/schemas/ShippingEvent"}}
+    Dashboard:
+      type: object
+      required: [customer, orderCount, activeOrders, returnCount, spentCents, recentOrders]
+      properties:
+        customer: {$ref: "#/components/schemas/Customer"}
+        orderCount: {type: integer}
+        activeOrders: {type: integer}
+        returnCount: {type: integer}
+        spentCents: {type: integer}
+        recentOrders: {type: array, items: {$ref: "#/components/schemas/Order"}}
+    CartItemInput:
+      type: object
+      additionalProperties: false
+      required: [slug, quantity]
+      properties:
+        slug: {type: string, minLength: 1}
+        quantity: {type: integer, minimum: 1, maximum: 10}
+        size: {type: string, maxLength: 30}
+    CheckoutInput:
+      type: object
+      additionalProperties: false
+      required: [items, requestId]
+      properties:
+        items: {type: array, minItems: 1, maxItems: 30, items: {$ref: "#/components/schemas/CartItemInput"}}
+        requestId: {type: string, format: uuid}
+    CheckoutLink:
+      type: object
+      required: [url, sessionId]
+      properties:
+        url: {type: string}
+        sessionId: {type: string}
+    CheckoutStatus:
+      type: object
+      required: [state, orderId]
+      properties:
+        state: {type: string, enum: [pending, completed, expired, failed]}
+        orderId: {type: [string, "null"]}
+    OrderStatus:
+      type: object
+      required: [id, number, customerId, status, shippingStatus, returnStatus, synthetic]
+      properties:
+        id: {type: string}
+        number: {type: string}
+        customerId: {type: string}
+        status: {type: string}
+        shippingStatus: {type: string}
+        returnStatus: {type: string}
+        synthetic: {type: boolean}
+        trackingNumber: {type: [string, "null"]}
+        carrier: {type: [string, "null"]}
+    ReturnInput:
+      type: object
+      additionalProperties: false
+      required: [orderId, reason, kind, conditionConfirmed]
+      properties:
+        orderId: {type: string}
+        reason: {type: string, minLength: 10, maxLength: 3000}
+        kind: {type: string, enum: [return, refund]}
+        conditionConfirmed: {type: boolean, const: true}
+    ReturnRequest:
+      type: object
+      required: [id, orderId, orderNumber, reason, kind, status, createdAt]
+      properties:
+        id: {type: string}
+        orderId: {type: string}
+        orderNumber: {type: string}
+        reason: {type: string}
+        kind: {type: string}
+        status: {type: string}
+        createdAt: {type: string}
+    TicketInput:
+      type: object
+      additionalProperties: false
+      required: [subject, description, category]
+      properties:
+        subject: {type: string, minLength: 4, maxLength: 160}
+        description: {type: string, minLength: 10, maxLength: 10000}
+        category: {type: string, enum: [Order, Shipping, Return, Product, Account, Other]}
+    MessageInput:
+      type: object
+      additionalProperties: false
+      required: [body]
+      properties:
+        body: {type: string, minLength: 3, maxLength: 10000}
+    Message:
+      type: object
+      required: [id, body, authorName, authorId, createdAt, hidden]
+      properties:
+        id: {type: string}
+        body: {type: string}
+        authorName: {type: string}
+        authorId: {type: string}
+        createdAt: {type: string}
+        hidden: {type: boolean}
+    Ticket:
+      type: object
+      required: [id, subject, description, category, status, createdAt, messages]
+      properties:
+        id: {type: string}
+        subject: {type: string}
+        description: {type: string}
+        category: {type: string}
+        status: {type: string}
+        createdAt: {type: string}
+        messages: {type: array, items: {$ref: "#/components/schemas/Message"}}
+    Category:
+      type: object
+      required: [slug, name, description, count]
+      properties:
+        slug: {type: string}
+        name: {type: string}
+        description: {type: string}
+        count: {type: integer}
+    DiscussionInput:
+      type: object
+      additionalProperties: false
+      required: [title, category, body]
+      properties:
+        title: {type: string, minLength: 8, maxLength: 180}
+        category: {type: string}
+        body: {type: string, minLength: 20, maxLength: 10000}
+    Discussion:
+      type: object
+      required: [id, slug, title, category, body, authorName, authorId, createdAt, updatedAt, approved, locked, replies]
+      properties:
+        id: {type: string}
+        slug: {type: string}
+        title: {type: string}
+        category: {type: string}
+        body: {type: string}
+        authorName: {type: string}
+        authorId: {type: string}
+        createdAt: {type: string}
+        updatedAt: {type: string}
+        approved: {type: boolean}
+        locked: {type: boolean}
+        replies: {type: array, items: {$ref: "#/components/schemas/Message"}}
+    DiscussionPage:
+      type: object
+      required: [items, total, page, pages]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/Discussion"}}
+        total: {type: integer}
+        page: {type: integer}
+        pages: {type: integer}
+    AdminOverview:
+      type: object
+      required: [pendingDiscussions, pendingReplies, tickets, returns, orders, userCount]
+      properties:
+        pendingDiscussions: {type: array, items: {$ref: "#/components/schemas/Discussion"}}
+        pendingReplies: {type: array, items: {$ref: "#/components/schemas/Message"}}
+        tickets: {type: array, items: {$ref: "#/components/schemas/Ticket"}}
+        returns: {type: array, items: {$ref: "#/components/schemas/ReturnRequest"}}
+        orders: {type: array, items: {$ref: "#/components/schemas/Order"}}
+        userCount: {type: integer}
+    ModerationInput:
+      type: object
+      additionalProperties: false
+      required: [id, action]
+      properties:
+        id: {type: string}
+        action: {type: string, enum: [publish, hide, lock, unlock, publish-reply, hide-reply]}
+    ActionResult:
+      type: object
+      required: [ok]
+      properties:
+        ok: {type: boolean}
+    TicketStatusInput:
+      type: object
+      additionalProperties: false
+      required: [status]
+      properties:
+        status: {type: string, enum: [Open, Pending, Solved, Closed]}
+    ReturnStatusInput:
+      type: object
+      additionalProperties: false
+      required: [status]
+      properties:
+        status: {type: string, enum: [Approved, Rejected, Inspected]}
+    ShippingInput:
+      type: object
+      additionalProperties: false
+      required: [status, description]
+      properties:
+        status: {type: string, enum: [Processing, Packed, Shipped, Out for delivery, Delivered]}
+        description: {type: string, minLength: 3, maxLength: 1000}

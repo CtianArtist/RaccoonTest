@@ -1,0 +1,2 @@
+- [Identity cache lifetimes](identity-cache-lifetimes.md) — replacing a React Query client on identity changes also requires remounting its observers.
+- [Preview runtime ownership](preview-runtime-ownership.md) — a responding preview does not prove the current managed workflow owns its server.

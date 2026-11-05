@@ -1,0 +1,122 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "yr378rqDrdz2zW6Wg5Wyn"
+uri = "file://.local/conversation-workspace/files/attached_assets/raccoon-homepage-verified.png"
+type = "image"
+title = "Restored Raccoon Supply homepage"
+description = "Screenshot of the live storefront after restoring the root homepage and removing the demo notices and provider labels from site content."
+logical_id = "b7c587df-d31f-4741-9cfa-0ca199605363"
+content_hash = "sha256:4b027f0334ceda84b32f448fee0e74e81cfd3fad79a871dbc498656968c7d54d"
+size = 1085624
+mtime_ms = 1791922476321
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/b7c587df-d31f-4741-9cfa-0ca199605363/e138f4bd-2954-4770-a028-eae12d050f66"
+storage_version_token = "1791922482675617"
+content_type = "image/png"
+source_uri = "file://attached_assets/raccoon-homepage-verified.png"
+
+[[outputs]]
+id = "49kaZoywlbe_rdJAMFQEb"
+uri = "file://.local/conversation-workspace/files/raccoon-community/IMPLEMENTATION.md"
+type = "text"
+title = "Deployment and implementation guide"
+description = "What is implemented, how to run the secure backend, and the remaining hosting requirements."
+logical_id = "92a14c83-7605-4cc6-989b-dccda47cf277"
+content_hash = "sha256:a3f0dd41c3dc16d9ad5e40457309964b691dd5e8797b222471d33c8f5c85ece6"
+size = 8825
+mtime_ms = 1793403267964
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/92a14c83-7605-4cc6-989b-dccda47cf277/90386ece-6349-48fc-81ad-49706dbd36cc"
+storage_version_token = "1793403644448710"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/IMPLEMENTATION.md"
+
+[[outputs]]
+id = "ToH66C3jVytUW8Wizu8ug"
+uri = "file://.local/conversation-workspace/files/raccoon-community/ZENDESK_CRAWLER_SETUP.md"
+type = "text"
+title = "Zendesk crawler setup"
+description = "Public community entry points, source separation, indexing configuration and retrieval verification."
+logical_id = "e38dea29-a029-418c-8dbd-3bcf1e0f2901"
+content_hash = "sha256:222391f17b575cc63f10da804a7cb711b33d44dd7ada907a5c07bcacc926feb7"
+size = 4832
+mtime_ms = 1793401952668
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/e38dea29-a029-418c-8dbd-3bcf1e0f2901/2fe891da-103a-46be-afc5-7dfb3346b151"
+storage_version_token = "1793403645228299"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/ZENDESK_CRAWLER_SETUP.md"
+
+[[outputs]]
+id = "yDH2EtkA7Z-dS8B_cHPGh"
+uri = "file://.local/conversation-workspace/files/raccoon-community/ZENDESK_ACTION_SETUP.md"
+type = "text"
+title = "Zendesk action setup"
+description = "Customer-bound API authentication, reviewed action workflows and safe verification steps."
+logical_id = "8dc62adc-d339-491a-9a02-97a4903958b5"
+content_hash = "sha256:ec40ba8c70575746539f7d5b7addf93acd9e27df2eefdeab0717d318f618784d"
+size = 6020
+mtime_ms = 1793401972140
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/8dc62adc-d339-491a-9a02-97a4903958b5/3c39f0b8-1c48-483c-b985-f2033a6418a6"
+storage_version_token = "1793403645938677"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/ZENDESK_ACTION_SETUP.md"
+
+[[outputs]]
+id = "0JUCMbaQ-sLYAMeGnUA0Q"
+uri = "file://.local/conversation-workspace/files/raccoon-community/ZENDESK_COPILOT_SETUP.md"
+type = "text"
+title = "Zendesk Copilot setup"
+description = "How to evaluate Similar Tickets with synthetic records in the actual Zendesk account."
+logical_id = "0357e80f-eefc-4c07-bd17-7d7bb5fd5d13"
+content_hash = "sha256:8ff235d592e1ae55415e67546b1835755a54648742dc8ed11d9b3471302765c8"
+size = 3311
+mtime_ms = 1793401982300
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/0357e80f-eefc-4c07-bd17-7d7bb5fd5d13/005a09c4-492f-41fa-b875-73215a5610ec"
+storage_version_token = "1793403646648460"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/ZENDESK_COPILOT_SETUP.md"
+
+[[outputs]]
+id = "WDoaK-Mdp2YBtKcEw7Ys2"
+uri = "file://.local/conversation-workspace/files/raccoon-community/TEST_RESULTS.md"
+type = "text"
+title = "Verified test results"
+description = "Local PostgreSQL security tests, browser workflows and live GitHub Pages release checks."
+logical_id = "e7d7795d-9038-42b4-a301-bd06b54965d9"
+content_hash = "sha256:b20edcbdb6588169d8f9db65eed5178d9d09a991f4be4087dcaa99ef7b731476"
+size = 4017
+mtime_ms = 1793403561680
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/e7d7795d-9038-42b4-a301-bd06b54965d9/d72c4da6-c9d9-4be8-901d-d7403d847361"
+storage_version_token = "1793403647389476"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/TEST_RESULTS.md"
+
+[[outputs]]
+id = "VM6oR044wfOCVQL3apmol"
+uri = "file://.local/conversation-workspace/files/raccoon-community/API_ENDPOINTS.md"
+type = "text"
+title = "Complete API inventory"
+description = "All 22 implemented API routes and their authentication and authorization requirements."
+logical_id = "e4191e61-c720-4832-9250-7a39c9a9928e"
+content_hash = "sha256:eca3319b9cc57dd1e404dc9c6dac8ab42edffbbcfe5806f188a66a47c00572e9"
+size = 3219
+mtime_ms = 1793403615544
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/e4191e61-c720-4832-9250-7a39c9a9928e/960e1826-7f2c-462c-82e4-40ceaf74a246"
+storage_version_token = "1793403648122472"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/API_ENDPOINTS.md"
+
+[[outputs]]
+id = "2pck47X8Ap0adc21v-B4k"
+uri = "file://.local/conversation-workspace/files/raccoon-community/PUBLIC_CRAWLER_URLS.md"
+type = "text"
+title = "Public crawler URL list"
+description = "Community-only URL allow-list that excludes private routes and reference experiments."
+logical_id = "94ec98e5-ddce-4a20-8d41-e342d333cfcc"
+content_hash = "sha256:e07b61e9228a0725dda0a9e2adfbc9e3c0d70f5b0d8fa88c0c3e755b3117279d"
+size = 1821
+mtime_ms = 1793401985784
+storage_uri = "gcs://replit-rams-assets-reed/rams/assets/conversation:5bb88d3d-1d34-496c-8e8f-9aaf8fd048b5/94ec98e5-ddce-4a20-8d41-e342d333cfcc/ab65641f-bcc1-43ba-bba9-67f1794f1357"
+storage_version_token = "1793403648803060"
+content_type = "text/markdown"
+source_uri = "file://raccoon-community/PUBLIC_CRAWLER_URLS.md"

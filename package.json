@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:server": "PORT=5173 BASE_PATH=/ NODE_ENV=production pnpm --filter @workspace/raccoon-supply-shop build && pnpm --filter @workspace/api-server build",
-    "start:server": "pnpm --filter @workspace/api-server start",
-    "seed:support": "pnpm --filter @workspace/api-server seed",
-    "test:support": "node --test tests/support.integration.mjs",
-    "test:browser": "node tests/browser.smoke.mjs",
-    "build:pages": "PORT=5173 BASE_PATH=/RaccoonTest/ NODE_ENV=production pnpm --filter @workspace/raccoon-supply-shop build && node scripts/publish-pages.mjs",
+    "test:browser": "playwright test",
+    "test:browser:customers": "playwright test --project=customers",
+    "test:browser:checkout": "playwright test --project=simulated-checkout",
     "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
@@ -19,7 +16,10 @@
     "@replit/connectors-sdk": "^0.4.3"
   },
   "devDependencies": {
-    "prettier": "^3.9.6",
+    "@clerk/testing": "^2.2.53",
+    "@playwright/test": "^1.64.1",
+    "pg": "^8.23.1",
+    "prettier": "^3.9.10",
     "typescript": "~5.9.3"
   }
 }
