@@ -1,0 +1,4 @@
+1:"$Sreact.fragment"
+2:I[39756,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"default"]
+3:I[37457,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"default"]
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NlGnfUWnQmnuLvUWXu5dp"}
