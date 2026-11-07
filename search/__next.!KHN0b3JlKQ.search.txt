@@ -1,0 +1,6 @@
+1:I[39756,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"LoadingBoundaryProvider"]
+2:"$Sreact.fragment"
+3:I[39756,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"default"]
+4:I[37457,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"default"]
+5:[]
+0:{"rsc":["$","$L1",null,{"loading":[["$","div","l",{"className":"mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8","children":[["$","div",null,{"data-slot":"skeleton","className":"animate-pulse rounded-md bg-muted h-9 w-32"}],["$","div",null,{"data-slot":"skeleton","className":"animate-pulse rounded-md bg-muted mt-8 h-10 w-full max-w-lg"}]]}],[],[]],"children":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}]}],"isPartial":false,"staleTime":300,"varyParams":"$W5","buildId":"NlGnfUWnQmnuLvUWXu5dp"}

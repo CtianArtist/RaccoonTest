@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[89463,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js","/raccoon-supply-co/_next/static/chunks/0rcdk.vvuy~jm.js","/raccoon-supply-co/_next/static/chunks/0n93y6x4jpi2m.js","/raccoon-supply-co/_next/static/chunks/0iq0_e5c471jz.js","/raccoon-supply-co/_next/static/chunks/06fvxq51fz-i~.js","/raccoon-supply-co/_next/static/chunks/09m_gq2kg0-xl.js"],"StaticCatalog"]
+3:I[97367,["/raccoon-supply-co/_next/static/chunks/0dl1-637v.xgm.js","/raccoon-supply-co/_next/static/chunks/0io2a~bqy4q1c.js","/raccoon-supply-co/_next/static/chunks/0wxp1bkygwzfq.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/raccoon-supply-co/_next/static/chunks/09m_gq2kg0-xl.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NlGnfUWnQmnuLvUWXu5dp"}
+5:null
